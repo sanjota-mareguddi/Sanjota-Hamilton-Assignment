@@ -1,5 +1,6 @@
 
 import React from 'react';
+import './style.scss';
 
 const MovieList = (props) => {
 	if (props.loading) {

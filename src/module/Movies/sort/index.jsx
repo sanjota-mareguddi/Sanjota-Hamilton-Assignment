@@ -1,6 +1,7 @@
 
 
 import React from 'react';
+import './style.scss';
 
 const SortBy = (props) => {
     return (<select onChange={props.change}>

@@ -1,0 +1,38 @@
+.image-container {
+	position: relative;
+	transition: transform 0.2s;
+    border: 2px solid #ccc;
+    box-shadow: 5px 4px 5px 2px #535c53;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        color: #fff;
+        transition: 0.5s ease;
+    .overlay {
+        opacity: 1;
+        }
+    }
+    img {
+        height: 300px;
+        width: 235px;
+      }
+    .link{
+        font-size: 15px;
+        background: #fff;
+        border-radius: 3px;
+        padding: 0px 3px;
+    }
+    .overlay {
+        position: absolute;
+        background: rgb(41 45 173 / 80%);
+        width: 100%;
+        transition: 0.5s ease;
+        bottom: 0;
+        font-size: 19px;
+        text-align: center;
+        justify-content: space-between !important;
+      }
+}
+.loading{
+    color:#000;
+}
