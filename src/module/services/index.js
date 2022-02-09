@@ -1,9 +1,8 @@
-export function Service() {
+export default function MoviesService() {
     //configurable section
     const ROOT = {
-        URL: "https://api.themoviedb.org/3/",
-        IMAGE_BASE_URL: 'http://image.tmdb.org/t/p/',
-        API_KEY: '844dba0bfd8f3a4f3799f6130ef9e335',
+        URL: "http://www.omdbapi.com/",
+        API_KEY: '263d22d8',
         METHOD: {
             GET: "GET",
             POST: "POST"
@@ -11,16 +10,14 @@ export function Service() {
         SERVICE: {
             configuration: "configuration"
         }
+       
     }
 //TO-DO
-    async function getMoviesList() {
-        // const param={
-        //     api_key:ROOT.API_KEY
-        // }
-        // const data=fetch(ROOT.ULR,SERVICE.configuration?param).then(resp=>resp.json().then(data=>data));
-        const resp = await fetch("https://api.themoviedb.org/3/configuration?api_key=019e8f375549e0bbd4a4191862ebc88f");
-        const result = await resp.json();
-        return result;
+    async function getMoviesList(searcKey,currentPage) {
+         const url = `${ROOT.URL}?s=${searcKey}&page=${currentPage}&apikey=${ROOT.API_KEY}`;
+        const response = await fetch(url);
+        const responseJson = await response.json();
+        return responseJson;
     }
 
     return {

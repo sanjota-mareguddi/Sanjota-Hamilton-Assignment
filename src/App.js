@@ -5,8 +5,11 @@ import Pagination from './module/footer/pagination/index';
 import MovieList from './module/Movies/list/index';
 import SearchBox from './module/Movies/search/index';
 import SortBy from './module/Movies/sort/index';
+import MoviesService from './module/services/index'
 
 import './App.css';
+
+const moviesService = new MoviesService();
 function App() {
   const [movies, setMovies] = useState([]);
   const [totalResults, setTotalResults] = useState(10);
@@ -26,26 +29,22 @@ function App() {
     if (currentPage === 1);
     else
       setCurrentPage(currentPage - 1);
-      //call the api to fetch the data and update the movies list
+    //call the api to fetch the data and update the movies list
   }
 
   const nextpage = () => {
     if (currentPage === Math.ceil(totalResults / moviesPerPage));
     else
-    setCurrentPage(currentPage + 1);
+      setCurrentPage(currentPage + 1);
     //call the api to fetch the data and update the movies list
   }
 
   //API call to get the Movies data
   const getMovieRequest = async (searchValue, currentPage = 1) => {
-    setLoading(true);
-    //search input clear handle
-    const searcKey = searchValue === '' ? "movie" :searchValue;
+    const searcKey = searchValue === '' ? "movie" : searchValue;
     setSearchValue(searcKey);
-    //used public API omdbapi to get the movies list
-    const url = `http://www.omdbapi.com/?s=${searcKey}&page=${currentPage}&apikey=263d22d8`;
-    const response = await fetch(url);
-    const responseJson = await response.json();
+    const responseJson = await moviesService.moviesList(searcKey, currentPage)
+    setLoading(true);
     if (responseJson.Search) {
       setMovies(responseJson.Search);
       setPageNav(true);
@@ -55,8 +54,8 @@ function App() {
   };
 
   useEffect(() => {
-    getMovieRequest(searchValue,currentPage);
-  }, [searchValue,currentPage]);
+    getMovieRequest(searchValue, currentPage);
+  }, [searchValue, currentPage]);
 
   //sort by asc/desc
   const change = (e) => {
