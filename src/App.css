@@ -1,6 +1,6 @@
 body {
-	background: #eee;
-	color: #fff;
+	background: #fff;
+	color: #000;
 }
 
 .movie-app > .row {
@@ -14,5 +14,40 @@ body {
   justify-content: flex-start;
   float: left;
   margin-right: 30px;
+}
+/* //ghost style */
+.ghost-elem {
+    background: rgba(212, 212, 212, 0.44);
+    border-radius: 5px;
+}
+
+.ghost-elem.shiny {
+    animation: shine 1.5s ease-in 0s infinite normal forwards;
+    -ms-animation-name: none;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #ccc 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px 104px;
+}
+
+@keyframes ghostbreathe {
+    from {
+        background: rgba(212, 212, 212, 0.44);
+        transform: scale(1.8);
+    }
+
+    to {
+        background: rgba(199, 199, 199, 0.5);
+        transform: scale(1.5);
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
 }
 

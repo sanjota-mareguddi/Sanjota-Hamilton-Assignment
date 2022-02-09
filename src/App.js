@@ -6,7 +6,7 @@ import MovieList from './module/Movies/list/index';
 import SearchBox from './module/Movies/search/index';
 import SortBy from './module/Movies/sort/index';
 import MoviesService from './module/services/index'
-
+import ListGhost from './shared/components/ghost-elements/index'
 import './App.css';
 
 const moviesService = new MoviesService();

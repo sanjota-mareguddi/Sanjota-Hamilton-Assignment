@@ -10,11 +10,10 @@ export default function MoviesService() {
         SERVICE: {
             configuration: "configuration"
         }
-       
+
     }
-//TO-DO
-    async function getMoviesList(searcKey,currentPage) {
-         const url = `${ROOT.URL}?s=${searcKey}&page=${currentPage}&apikey=${ROOT.API_KEY}`;
+    async function getMoviesList(searcKey, currentPage) {
+        const url = `${ROOT.URL}?s=${searcKey}&page=${currentPage}&apikey=${ROOT.API_KEY}`;
         const response = await fetch(url);
         const responseJson = await response.json();
         return responseJson;

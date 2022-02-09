@@ -1,10 +1,11 @@
 
 import React from 'react';
 import './style.scss';
+import ListGhost from '../../../shared/components/ghost-elements/index'
 
 const MovieList = (props) => {
 	if (props.loading) {
-		return <h2 className='loading'>Loading..</h2>;
+		return (<div className='ghost-elements'><ListGhost /></div>);
 	}
 
 	return (
