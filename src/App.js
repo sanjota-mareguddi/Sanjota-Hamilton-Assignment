@@ -15,13 +15,15 @@ function App() {
   const [totalResults, setTotalResults] = useState(10);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage,setMoviesPerPage] = useState(5);
+  const [moviesPerPage] = useState(5);
   const [pageNav, setPageNav] = useState(false);
   const [searchValue, setSearchValue] = useState('movie');
   const [sortMode, setSortMode] = useState('asc');
+  const[upperPageBound, setUpperPageBound]=useState(10)
+  const[lowerPageBound, setLowerPageBound]=useState(0)
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  let currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+   let currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //pagination
@@ -32,9 +34,14 @@ function App() {
   }
 
   const nextpage = () => {
-    if (currentPage === Math.ceil(totalResults / moviesPerPage));
-    else
-      setCurrentPage(currentPage + 1);
+
+    if((currentPage + 1) > upperPageBound ){
+      setUpperPageBound(upperPageBound+moviesPerPage);
+      setLowerPageBound(lowerPageBound+moviesPerPage);
+  }
+  let listid = currentPage + 1;
+  setCurrentPage(listid);
+  if (currentPage === Math.ceil(totalResults / moviesPerPage)){return}
   }
 
   //API call to get the Movies data
@@ -44,11 +51,11 @@ function App() {
     const responseJson = await moviesService.moviesList(searcKey, currentPage)
     setLoading(true);
     if (responseJson.Search) {
+       sortByTitle(responseJson.Search,sortMode);
        setPageNav(true);
-      setTotalResults(responseJson.totalResults);
-        setLoading(false);
-      setMoviesPerPage(700) //display 10 records per page
-      sortByTitle(responseJson.Search,sortMode);
+       setTotalResults(responseJson.totalResults);
+       setLoading(false);
+      //  setMoviesPerPage(700) //display 10 records per page
     }
   };
 
@@ -59,7 +66,6 @@ function App() {
 
   useEffect(() => {
     currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
-
   }, []);
 
 
@@ -103,6 +109,9 @@ function App() {
           paginate={paginate}
           prepage={prepage}
           nextpage={nextpage}
+          currentPage={currentPage}
+          lowerPageBound={lowerPageBound}
+          upperPageBound={upperPageBound}
         /> : null}
       </div>
     </div>
