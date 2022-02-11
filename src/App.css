@@ -15,6 +15,14 @@ body {
   float: left;
   margin-right: 30px;
 }
+
+.sort-section{
+    padding: 0 10px;
+    font: 400 13px/1 Roboto Bold,Trebuchet MS,Helvetica,Arial,sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #767676;
+}
 /* //ghost style */
 .ghost-elem {
     background: rgba(212, 212, 212, 0.44);

@@ -52,7 +52,6 @@ function App() {
     setLoading(true);
     if (responseJson.Search) {
        sortByTitle(responseJson.Search,sortMode);
-       setPageNav(true);
        setTotalResults(responseJson.totalResults);
        setLoading(false);
       //  setMoviesPerPage(700) //display 10 records per page
@@ -76,9 +75,11 @@ function App() {
     if (mode === 'asc') {
       sortedMovies = moviesData.sort((a, b) => (a.Title > b.Title) ? 1 : -1);
       setMovies(sortedMovies);
+      setPageNav(true);
     } else {
       sortedMovies = moviesData.sort((a, b) => (a.Title > b.Title) ? -1 : 1);
       setMovies(sortedMovies);
+      setPageNav(true);
     }
     mode = !mode
 
@@ -95,7 +96,7 @@ function App() {
         <div className='row d-flex align-items-center mt-4 mb-4'>
           <div className='row results'><label> {totalResults >= 1 ? totalResults : "No records"} Records Found</label></div>
           <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
-          <SortBy change={change} />
+          <div class="sort-section"><label>SORT BY</label> <SortBy change={change} /></div>
         </div>
         <div className='row'>
           <MovieList
