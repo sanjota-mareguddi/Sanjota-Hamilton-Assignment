@@ -15,13 +15,14 @@ function App() {
   const [totalResults, setTotalResults] = useState(10);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(4);
-  const [pageNav, setPageNav] = useState(true);
-  const [sortMode, setsortMode] = useState('asc');
+  const [moviesPerPage,setMoviesPerPage] = useState(5);
+  const [pageNav, setPageNav] = useState(false);
+  const [sortMode, setSortMode] = useState('asc');
   const [searchValue, setSearchValue] = useState('movie');
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  let currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  // const [currentMovies, setCurrentMovies]=useState(currentMovies)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //pagination
@@ -29,14 +30,12 @@ function App() {
     if (currentPage === 1);
     else
       setCurrentPage(currentPage - 1);
-    //call the api to fetch the data and update the movies list
   }
 
   const nextpage = () => {
     if (currentPage === Math.ceil(totalResults / moviesPerPage));
     else
       setCurrentPage(currentPage + 1);
-    //call the api to fetch the data and update the movies list
   }
 
   //API call to get the Movies data
@@ -49,36 +48,55 @@ function App() {
       setMovies(responseJson.Search);
       setPageNav(true);
       setLoading(false);
-      setTotalResults(responseJson.Search.length)
+      setMoviesPerPage(700) //display 10 records per page
+      setTotalResults(responseJson.totalResults)
     }
   };
 
-  useEffect(() => {
+    useEffect(() => {
     getMovieRequest(searchValue, currentPage);
   }, [searchValue, currentPage]);
 
+
+  useEffect(() => {
+    debugger
+    currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  }, [sortMode]);
+
+
+
+
+  function sortByTitle(moviesData,modeChange) {
+    setSortMode(modeChange);
+    let mode = modeChange;
+    let sortedMovies = [];
+    if (mode === 'asc') {
+      sortedMovies = moviesData.sort((a, b) => (a.Title > b.Title) ? 1 : -1);
+      setMovies(sortedMovies);
+    } else {
+      sortedMovies = moviesData.sort((a, b) => (a.Title > b.Title) ? -1 : 1);
+      setMovies(sortedMovies);
+    }
+    mode = !mode
+
+  }
+
   //sort by asc/desc
   const change = (e) => {
-    setsortMode(e.target.value);
-    setMovies(movies.slice().sort(function (firstUser, secondUser) {
-      if (firstUser.Title > secondUser.Title) return 1;
-      if (firstUser.Title < secondUser.Title) return -1;
-      return 0;
-    }));
-    setPageNav(true);
+    sortByTitle(movies,e.target.value)
   }
 
   return (
     <div className="App">
       <div className='container-fluid movie-app'>
         <div className='row d-flex align-items-center mt-4 mb-4'>
-          <div className='row results'><label> {movies.length >= 1 ? movies.length : "No records"} Records Found</label></div>
+          <div className='row results'><label> {totalResults >= 1 ? totalResults : "No records"} Records Found</label></div>
           <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
           <SortBy change={change} />
         </div>
         <div className='row'>
           <MovieList
-            movies={currentMovies}
+            movies={movies}
             loading={loading}
           />
         </div>
@@ -90,7 +108,6 @@ function App() {
           nextpage={nextpage}
         /> : null}
       </div>
-
     </div>
 
   );
