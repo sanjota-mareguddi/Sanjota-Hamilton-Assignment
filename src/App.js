@@ -17,12 +17,11 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage,setMoviesPerPage] = useState(5);
   const [pageNav, setPageNav] = useState(false);
-  const [sortMode, setSortMode] = useState('asc');
   const [searchValue, setSearchValue] = useState('movie');
+  const [sortMode, setSortMode] = useState('asc');
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
   let currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
-  // const [currentMovies, setCurrentMovies]=useState(currentMovies)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //pagination
@@ -45,25 +44,23 @@ function App() {
     const responseJson = await moviesService.moviesList(searcKey, currentPage)
     setLoading(true);
     if (responseJson.Search) {
-      setMovies(responseJson.Search);
-      setPageNav(true);
-      setLoading(false);
+       setPageNav(true);
+      setTotalResults(responseJson.totalResults);
+        setLoading(false);
       setMoviesPerPage(700) //display 10 records per page
-      setTotalResults(responseJson.totalResults)
+      sortByTitle(responseJson.Search,sortMode);
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     getMovieRequest(searchValue, currentPage);
   }, [searchValue, currentPage]);
 
 
   useEffect(() => {
-    debugger
     currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
-  }, [sortMode]);
 
-
+  }, []);
 
 
   function sortByTitle(moviesData,modeChange) {
