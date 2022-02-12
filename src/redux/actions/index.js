@@ -1,14 +1,9 @@
 
-import { GET_MOVIES_LIST, GET_MOVIESACTIONS_RECEIVED } from './constants';
+import { GET_MOVIES_LIST } from '../constants/index';
 
-export function getMoviesActions() {
+export function getMoviesActions(movieList) {
 	return {
-		type: GET_MOVIES_LIST
-	};
-}
-export function getMoviesAtionsReceived(params) {
-	return {
-		type: GET_MOVIESACTIONS_RECEIVED,
-		params,
+		type: GET_MOVIES_LIST,
+		payload: movieList,
 	};
 }

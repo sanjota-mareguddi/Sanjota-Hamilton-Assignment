@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from './module/footer/pagination/index';
 import MovieList from './module/Movies/list/index';
 import SearchBox from './module/Movies/search/index';
@@ -9,6 +10,8 @@ import SortBy from './module/Movies/sort/index';
 import MoviesService from './module/services/index';
 import Footer from './shared/components/Footer/Footer' ;
 import Header from './shared/components/Header/Header';
+import {getMoviesActions} from './redux/actions/index';
+import store from './redux/store';
 import MovieDetail from './module/Movies/list/MovieDetail/MovieDetail'
 import './App.scss';
 
@@ -26,8 +29,19 @@ function App() {
   const[lowerPageBound, setLowerPageBound]=useState(0)
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  let moviesStore = useSelector((state) => state.moviesList);
    let currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const dispatch = useDispatch();
+
+
+  function getMoviesData(){
+    var newState =store.getState();
+    moviesStore=newState.moviesList;
+    console.log('state changed');
+ }
+  store.subscribe(getMoviesData)
+
 
   //pagination
   const prepage = () => {
@@ -54,10 +68,12 @@ function App() {
     const responseJson = await moviesService.moviesList(searcKey, currentPage)
     setLoading(true);
     if (responseJson.Search) {
-       sortByTitle(responseJson.Search,sortMode);
-       setTotalResults(responseJson.totalResults);
-       setLoading(false);
-      //  setMoviesPerPage(700) //display 10 records per page
+        dispatch(getMoviesActions(responseJson));
+        sortByTitle(moviesStore.movies.Search,sortMode);
+        setTotalResults(moviesStore.movies.totalResults);
+        setLoading(false);
+           
+          //  setMoviesPerPage(700) //display 10 records per page
     }
   };
 
@@ -72,6 +88,7 @@ function App() {
 
 
   function sortByTitle(moviesData,modeChange) {
+    if(moviesData.length>=1){
     setSortMode(modeChange);
     let mode = modeChange;
     let sortedMovies = [];
@@ -85,6 +102,7 @@ function App() {
       setPageNav(true);
     }
     mode = !mode
+  }
 
   }
 
