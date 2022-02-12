@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Pagination from './module/footer/pagination/index';
 import MovieList from './module/Movies/list/index';
 import SearchBox from './module/Movies/search/index';
@@ -8,6 +9,7 @@ import SortBy from './module/Movies/sort/index';
 import MoviesService from './module/services/index';
 import Footer from './shared/components/Footer/Footer' ;
 import Header from './shared/components/Header/Header';
+import MovieDetail from './module/Movies/list/MovieDetail/MovieDetail'
 import './App.scss';
 
 const moviesService = new MoviesService();
@@ -91,33 +93,45 @@ function App() {
     sortByTitle(movies,e.target.value)
   }
 
+  const Home=()=>{
+    return <div className='container-fluid movie-app'>
+    <div className='row d-flex align-items-center mt-4 mb-4'>
+      <div className='row results'><label> {totalResults >= 1 ? totalResults : "No records"} Records Found</label></div>
+      <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+      <div class="sort-section"><label>SORT BY</label> <SortBy change={change} /></div>
+    </div>
+    <div className='row'>
+      <MovieList
+        movies={movies}
+        loading={loading}
+      />
+    </div>
+    {pageNav ? <Pagination
+      moviesPerPage={moviesPerPage}
+      totalMovies={totalResults}
+      paginate={paginate}
+      prepage={prepage}
+      nextpage={nextpage}
+      currentPage={currentPage}
+      lowerPageBound={lowerPageBound}
+      upperPageBound={upperPageBound}
+    /> : null}
+  </div>
+  }
+
   return (
     <div className="App">
-      <Header/>
-      <div className='container-fluid movie-app'>
-        <div className='row d-flex align-items-center mt-4 mb-4'>
-          <div className='row results'><label> {totalResults >= 1 ? totalResults : "No records"} Records Found</label></div>
-          <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
-          <div class="sort-section"><label>SORT BY</label> <SortBy change={change} /></div>
+      <Router>
+        <Header></Header>
+        <div className="container">
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/movie/:imdbID"  
+            render={(props) => <MovieDetail  movies={movies} />} />
+          </Switch>
         </div>
-        <div className='row'>
-          <MovieList
-            movies={movies}
-            loading={loading}
-          />
-        </div>
-        {pageNav ? <Pagination
-          moviesPerPage={moviesPerPage}
-          totalMovies={totalResults}
-          paginate={paginate}
-          prepage={prepage}
-          nextpage={nextpage}
-          currentPage={currentPage}
-          lowerPageBound={lowerPageBound}
-          upperPageBound={upperPageBound}
-        /> : null}
-      </div>
-      <Footer/>
+      </Router>
+      <Footer />
     </div>
 
   );

@@ -1,5 +1,13 @@
 .pagination{
-    .page-item{
-        
-    }
+        .active{
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #007bff;
+            background-color: #fff;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #dee2e6;
+            button{
+                border: none;
+            }
+        }
 }

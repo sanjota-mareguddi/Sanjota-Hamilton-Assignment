@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import "./style.scss"
 
 const Pagination = ({moviesPerPage, totalMovies, paginate, prepage, nextpage,currentPage,upperPageBound,lowerPageBound}) => {
     const pageNumbers =[];

@@ -4,19 +4,25 @@ $secondary-color: #1a242f;
 $font-primary: #ffffff;
 $font-secondary: #79b8f3;
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
 
 body {
-	background: #fff;
-	color: #000;
+    background: #0f171e;
+	color: #fff;
 }
 
-.movie-app > .row {
-	overflow-x: auto;
-	justify-content: center;
-}
+// .movie-app > .row {
+// 	overflow-x: auto;
+// 	justify-content: center;
+// }
 
 .results{
-  color: #000;
+  color: #fff;
   text-align: left;
   justify-content: flex-start;
   float: left;
