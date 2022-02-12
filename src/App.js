@@ -5,9 +5,10 @@ import Pagination from './module/footer/pagination/index';
 import MovieList from './module/Movies/list/index';
 import SearchBox from './module/Movies/search/index';
 import SortBy from './module/Movies/sort/index';
-import MoviesService from './module/services/index'
-import ListGhost from './shared/components/ghost-elements/index'
-import './App.css';
+import MoviesService from './module/services/index';
+import Footer from './shared/components/Footer/Footer' ;
+import Header from './shared/components/Header/Header';
+import './App.scss';
 
 const moviesService = new MoviesService();
 function App() {
@@ -92,6 +93,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header/>
       <div className='container-fluid movie-app'>
         <div className='row d-flex align-items-center mt-4 mb-4'>
           <div className='row results'><label> {totalResults >= 1 ? totalResults : "No records"} Records Found</label></div>
@@ -115,6 +117,7 @@ function App() {
           upperPageBound={upperPageBound}
         /> : null}
       </div>
+      <Footer/>
     </div>
 
   );
