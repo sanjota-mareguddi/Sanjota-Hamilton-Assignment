@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./style.scss";
 const SearchBox = (props) => {
 	return (
 		<div className='col col-sm-4'>
