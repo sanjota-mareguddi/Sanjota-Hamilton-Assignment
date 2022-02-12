@@ -1,9 +1,9 @@
 
-import { GET_MOVIES_LIST } from '../constants/index';
+import { ActionTypes } from '../constants/index';
 
 export function getMoviesActions(movieList) {
 	return {
-		type: GET_MOVIES_LIST,
+		type: ActionTypes.GET_MOVIES_LIST,
 		payload: movieList,
 	};
 }

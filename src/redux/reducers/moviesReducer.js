@@ -1,4 +1,4 @@
-import {GET_MOVIES_LIST} from '../constants/index'
+import {ActionTypes} from '../constants/index'
 const initialState = {
       movies: {
         Search:[],
@@ -7,7 +7,7 @@ const initialState = {
   };
   export const moviesReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-      case GET_MOVIES_LIST:
+      case ActionTypes.GET_MOVIES_LIST:
         return { ...state, movies: payload };
       default:
         return state;

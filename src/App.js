@@ -72,8 +72,7 @@ function App() {
         sortByTitle(moviesStore.movies.Search,sortMode);
         setTotalResults(moviesStore.movies.totalResults);
         setLoading(false);
-           
-          //  setMoviesPerPage(700) //display 10 records per page
+       //  setMoviesPerPage(700) //display 10 records per page
     }
   };
 
