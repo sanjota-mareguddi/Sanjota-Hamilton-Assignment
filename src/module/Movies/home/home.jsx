@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Pagination from '../../footer/pagination/index';
+import Pagination from '../pagination/index';
 import MovieList from '../list/index';
 import SearchBox from '../search/index';
 import SortBy from '../sort/index';
