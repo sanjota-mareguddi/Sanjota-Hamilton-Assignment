@@ -7,3 +7,10 @@ export function getMoviesActions(movieList) {
 		payload: movieList,
 	};
 }
+
+export function getMoviesDetailsAction(details) {
+	return {
+		type: ActionTypes.GET_MOVIES_DETAILS,
+		payload: details,
+	};
+}

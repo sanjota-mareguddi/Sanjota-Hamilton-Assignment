@@ -3,6 +3,7 @@ export default function MoviesService() {
     const ROOT = {
         URL: "http://www.omdbapi.com/",
         API_KEY: '263d22d8',
+        APIKey: 'c951ff1',
         METHOD: {
             GET: "GET",
             POST: "POST"
@@ -19,7 +20,15 @@ export default function MoviesService() {
         return responseJson;
     }
 
+    async function fetchMovieDetailById(id) {
+        const url = `${ROOT.URL}?apikey=${ROOT.APIKey}&i=${id}`;
+        const response = await fetch(url);
+        const responseJson = await response.json();
+        debugger;
+        return responseJson;
+    }
     return {
-        moviesList: getMoviesList
+        moviesList: getMoviesList,
+        movieDetail:fetchMovieDetailById
     }
 }
