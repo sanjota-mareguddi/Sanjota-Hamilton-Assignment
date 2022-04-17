@@ -12,7 +12,7 @@ $font-secondary: #79b8f3;
 }
 
 body {
-    background: #0f171e;
+    background: #dee2e6;
 	color: #fff;
 }
 
@@ -22,11 +22,13 @@ body {
 // }
 
 .results{
-  color: #fff;
+  color: #000;
+  font-weight: bold;
   text-align: left;
   justify-content: flex-start;
   float: left;
   margin-right: 30px;
+  margin-left:18px;
 }
 
 .sort-section{
